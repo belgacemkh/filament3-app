@@ -38,18 +38,26 @@ class EmployeeResource extends Resource
                 Forms\Components\Section::make('User Address')
                     ->description('Put the user address details in.')
                     ->schema([
-                        Forms\Components\TextInput::make('country_id')
-                            ->required()
-                            ->numeric(),
-                        Forms\Components\TextInput::make('state_id')
-                            ->required()
-                            ->numeric(),
-                        Forms\Components\TextInput::make('city_id')
-                            ->required()
-                            ->numeric(),
-                        Forms\Components\TextInput::make('department_id')
-                            ->required()
-                            ->numeric(),
+                        Forms\Components\Select::make('country_id')
+                            ->relationship(name: 'country', titleAttribute: 'name')
+                            ->searchable()
+                            ->native(false)
+                            ->required(),
+                        Forms\Components\Select::make('state_id')
+                            ->relationship(name: 'state', titleAttribute: 'name')
+                            ->searchable()
+                            ->native(false)
+                            ->required(),
+                        Forms\Components\Select::make('city_id')
+                            ->relationship(name: 'city', titleAttribute: 'name')
+                            ->searchable()
+                            ->native(false)
+                            ->required(),
+                        Forms\Components\Select::make('department_id')
+                            ->relationship(name: 'department', titleAttribute: 'name')
+                            ->searchable()
+                            ->native(false)
+                            ->required(),
                         Forms\Components\TextInput::make('address')
                             ->required()
                             ->maxLength(255),
