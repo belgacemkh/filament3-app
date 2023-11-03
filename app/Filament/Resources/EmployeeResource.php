@@ -72,8 +72,8 @@ class EmployeeResource extends Resource
                             ->required(),
                         Forms\Components\Select::make('department_id')
                             ->relationship(name: 'department', titleAttribute: 'name')
-                            ->searchable()
                             ->native(false)
+                            ->live()
                             ->required(),
                         Forms\Components\TextInput::make('address')
                             ->required()
@@ -86,8 +86,12 @@ class EmployeeResource extends Resource
                     ->description('Put the user dates details in.')
                     ->schema([
                         Forms\Components\DatePicker::make('date_of_birth')
+                            ->native(false)
+                            ->displayFormat('d/m/Y')
                             ->required(),
                         Forms\Components\DatePicker::make('date_hire')
+                            ->native(false)
+                            ->displayFormat('d/m/Y')
                             ->required(),
                     ])->columns(2),
 
