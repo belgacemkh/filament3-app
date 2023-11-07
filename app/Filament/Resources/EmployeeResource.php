@@ -10,6 +10,9 @@ use Filament\Forms;
 use Filament\Forms\Form;
 use Filament\Forms\Get;
 use Filament\Forms\Set;
+use Filament\Infolists\Components\Section;
+use Filament\Infolists\Components\TextEntry;
+use Filament\Infolists\Infolist;
 use Filament\Resources\Resource;
 use Filament\Tables;
 use Filament\Tables\Table;
@@ -27,7 +30,7 @@ class EmployeeResource extends Resource
     {
         return $form
             ->schema([
-                Forms\Components\Section::make('User Name')
+                Forms\Components\Section::make('Name')
                     ->description('Put the user name details in.')
                     ->schema([
                         Forms\Components\TextInput::make('first_name')
@@ -40,7 +43,7 @@ class EmployeeResource extends Resource
                             ->required()
                             ->maxLength(255),
                     ])->columns(3),
-                Forms\Components\Section::make('User Address')
+                Forms\Components\Section::make('Address')
                     ->description('Put the user address details in.')
                     ->schema([
                         Forms\Components\Select::make('country_id')
@@ -150,6 +153,36 @@ class EmployeeResource extends Resource
             ]);
     }
 
+    public static function infolist(Infolist $infolist): Infolist
+    {
+        return $infolist
+            ->schema([
+                Section::make('Address')
+                    ->schema([
+                        TextEntry::make('country.name'),
+                        TextEntry::make('state.name'),
+                        TextEntry::make('city.name'),
+                        TextEntry::make('department.name'),
+                        TextEntry::make('address'),
+                        TextEntry::make('zip_code'),
+
+                    ])->columns(2),
+                Section::make('Name')
+                    ->schema([
+                        TextEntry::make('first_name'),
+                        TextEntry::make('last_name'),
+                        TextEntry::make('middle_name'),
+
+                    ])->columns(3),
+                Section::make('Dates')
+                    ->schema([
+                        TextEntry::make('date_of_birth'),
+                        TextEntry::make('date_hire'),
+
+                    ])->columns(2),
+            ]);
+    }
+
     public static function getRelations(): array
     {
         return [
@@ -162,7 +195,7 @@ class EmployeeResource extends Resource
         return [
             'index' => Pages\ListEmployees::route('/'),
             'create' => Pages\CreateEmployee::route('/create'),
-            'view' => Pages\ViewEmployee::route('/{record}'),
+            // 'view' => Pages\ViewEmployee::route('/{record}'),
             'edit' => Pages\EditEmployee::route('/{record}/edit'),
         ];
     }
